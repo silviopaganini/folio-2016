@@ -1,0 +1,225 @@
+@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+
+*{
+    font-family: 'Inconsolata' ;
+    font-weight: 100;
+}
+
+::selection {
+    background: transparent;
+    text-shadow: none;
+}
+
+body
+{
+    color: white;
+    background-color: black;
+}
+
+main
+{
+    padding: 0 30px;
+    /*display: none;*/
+}
+
+h1 {
+}
+
+h2
+{
+    color: #666;
+}
+
+a
+{
+    color: #63FFCB;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    -webkit-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+}
+
+a:hover
+{
+    border-bottom: 2px solid #63FFCB;
+}
+
+p
+{
+    color: #CCC;
+    line-height: 24px;
+    font-size: 16px;
+}
+
+.canvas-container
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.menu-project
+{
+    text-align: left;
+    width: 90vw;
+    /*margin: 0 auto;*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    -webkit-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+}
+
+.container-project
+{
+    align-self: center;
+    cursor: pointer;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 10px 10px 10px 0;
+    overflow: hidden;
+    background-color: #63FFCB;
+    border: 5px solid #242424;
+}
+
+.container-project > .text > p
+{
+    line-height: 34px;
+}
+
+.container-project > .text
+{
+    position: relative;
+    bottom: 35px;
+    color: black;
+    color: white;
+    width: 190px;
+    line-height: 34px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    background: black;
+    -webkit-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+    pointer-events: none;
+
+    transform-origin: bottom center;
+    transform: scaleY(0);
+
+}
+.container-project > .text > p
+{
+    font-size: 11px;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    transform: scaleY(2);
+    -webkit-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+}
+
+.project-item
+{
+    width: 200px;
+    height: 200px;
+}
+
+.project-item > img
+{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    padding: 0;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    height: 202px;
+    width: 200px;
+
+    /*height: 237px;
+    width: 237px;*/
+    -webkit-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.container-project
+{
+    border: 0;
+}
+
+hr
+{
+    border: 0;
+    border-top: 1px solid #ccc;
+    max-width: 30px;
+    margin: 40px 0 ;
+}
+
+.container-project:hover
+{
+    border: 0;
+}
+
+.container-project:hover > .project-item > img
+{
+    height: 190px;
+    width: 190px;
+    -webkit-filter: grayscale(0%);
+    filter: grayscale(0%);
+}
+
+.container-project:hover > .text
+{
+    bottom: 39px;
+    transform: scaleY(1);
+}
+
+.container-project:hover > .text > p
+{
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.contact
+{
+    text-align: left;
+    display: -webkit-box;
+    z-index: 120;
+}
+
+.contact_link
+{
+    width: 35px;
+}
+.contact_link:hover
+{
+    background-color: #434343;
+}
+
+.contact_link > a > img
+{
+    width: 100%;
+}
+
+.contact_link > a 
+{
+    border: 0;
+}
+.contact_link > a:hover
+{
+    border: 0;
+}
+
+section
+{
+    display: none;
+    position: absolute;
+    top: 0;
+    background-color: rgba(0,0,0,.8);
+    padding: 5% 20%;
+}
