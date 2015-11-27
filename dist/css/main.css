@@ -138,8 +138,6 @@ p
     height: 202px;
     width: 200px;
 
-    /*height: 237px;
-    width: 237px;*/
     -webkit-transition: all .15s ease-out;
     transition: all .15s ease-out;
 
@@ -215,11 +213,43 @@ hr
     border: 0;
 }
 
-section
-{
-    display: none;
-    position: absolute;
-    top: 0;
-    background-color: rgba(0,0,0,.8);
-    padding: 5% 20%;
+@media screen and (max-width: 600px) {
+    .menu-project
+    {
+        text-align: left;
+        width: 100vw;
+    }
+    .container-project
+    {
+        width: 140px;
+        height: 140px;
+        margin: 10px 30px 10px 0;
+    }
+
+    .project-item
+    {
+        width: 140px;
+        height: 140px;
+    }
+
+    .project-item > img
+    {
+        height: 135px;
+        width: 135px;
+    }
+
+    .container-project > .text
+    {
+        width: 135px;
+        overflow: hidden;
+        bottom: 36px;
+        white-space: nowrap;
+        transform: scaleY(1);
+    }
+
+    .container-project > .text > p
+    {
+        opacity: 1;
+        transform: scaleY(1);
+    }
 }
