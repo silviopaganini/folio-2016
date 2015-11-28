@@ -193,6 +193,7 @@ hr
 .contact_link
 {
     width: 35px;
+    display: inline-block;
 }
 .contact_link:hover
 {
