@@ -214,7 +214,7 @@ hr
     border: 0;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 375px) and (orientation:portrait){
     main
     {
         padding: 0 25px;
@@ -234,26 +234,29 @@ hr
     }
     .container-project
     {
-        width: 140px;
-        height: 140px;
-        margin: 10px 30px 10px 0;
+        width: 40vw;
+        height: 40vw;
+        margin: 10px 6vw 10px 0;
     }
 
     .project-item
     {
-        width: 140px;
-        height: 140px;
+        width: 40vw;
+        height: 40vw;
     }
 
     .project-item > img
     {
-        height: 135px;
-        width: 135px;
+        height: 39vw;
+        width: 39vw;
     }
 
     .container-project > .text
     {
-        width: 135px;
+        width: 38.5vw;
+        height: 34px;
+        /*margin-right: 1px;*/
+        /*max-width: 119px;*/
         overflow: hidden;
         bottom: 36px;
         white-space: nowrap;
@@ -262,6 +265,62 @@ hr
 
     .container-project > .text > p
     {
+        width: 100%;
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+@media screen and (max-width: 700px) and (orientation:landscape){
+
+    main
+    {
+        padding: 0 25px;
+    }
+    .break-desktop
+    {
+        display: none;
+    }
+    .menu-project
+    {
+        text-align: left;
+        width: 100vw;
+    }
+
+    .container-project
+    {
+        width: 22vw;
+        height: 22vw;
+        margin: 10px 6vw 10px 0;
+    }
+
+    .project-item
+    {
+        width: 22vw;
+        height: 22vw;
+    }
+
+    .project-item > img
+    {
+        height: 21vw;
+        width: 21vw;
+    }
+
+    .container-project > .text
+    {
+        width: 21vw;
+        height: 34px;
+        /*margin-right: 1px;*/
+        /*max-width: 119px;*/
+        overflow: hidden;
+        bottom: 38px;
+        white-space: nowrap;
+        transform: scaleY(1);
+    }
+
+    .container-project > .text > p
+    {
+        width: 100%;
         opacity: 1;
         transform: scaleY(1);
     }
