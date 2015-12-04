@@ -16,10 +16,37 @@ body
     background-color: black;
 }
 
-main
+section
 {
     padding: 0 30px;
     /*display: none;*/
+}
+
+.awards-container
+{
+    display: flex;
+    flex-wrap : wrap;
+    justify-content: space-between;
+}
+
+.awards-container
+{
+
+}
+
+.awards-container > div > h3
+{
+    margin-top: 10px;
+    /*font-size: 15px;*/
+    background: #CCC;
+    color: black;
+    padding: 0 2px;
+    display: inline;
+}
+
+.awards-container > div > p
+{
+    /*font-size: 13px;*/
 }
 
 h1 {
@@ -215,10 +242,22 @@ hr
 }
 
 @media screen and (max-width: 375px) and (orientation:portrait){
-    main
+    section
     {
         padding: 0 25px;
     }
+
+    section#awards > .awards-container
+    {
+        -webkit-column-gap: 60px; /* Chrome, Safari, Opera */
+        -moz-column-gap: 60px; /* Firefox */
+        column-gap: 60px;
+
+        -webkit-column-count: 1; /* Chrome, Safari, Opera */
+        -moz-column-count: 1; /* Firefox */
+        column-count: 1;
+    }
+
     .break-desktop
     {
         display: none;
