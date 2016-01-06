@@ -29,6 +29,19 @@ section
     justify-content: space-between;
 }
 
+.awards-list 
+{
+    padding-left: 10px;
+    margin-top: -10px;
+}
+
+.awards-list > li
+{
+    color: #888;
+    list-style: none;
+    font-size: 14px;
+}
+
 .awards-container
 {
 
