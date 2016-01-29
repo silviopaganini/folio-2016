@@ -18,12 +18,12 @@ void main() {
     vec4 mvPosition = modelViewMatrix * vec4(position , 1.0 );
 
     float power = 7.5;
-    vec3 nTime = normalize(vec3(time)) * 1.5;
+    vec3 nTime = normalize(vec3(time)) * 5.5;
     vec3 dist = vec3(snoise3(normal)) * (normal * power) * nTime;
 
-    mvPosition.x += cos(time * 2.) * (1.5 * dist.x) * normal.x ;
-    mvPosition.y += sin(time * 2.) * (1.5 * dist.y) * normal.y ;
-    mvPosition.z += sin(time * 2.) * (1.5 * dist.z) * normal.z ;
+    mvPosition.x += cos(time * 2.) * (5.5 * dist.x) * normal.x ;
+    mvPosition.y += sin(time * 2.) * (5.5 * dist.y) * normal.y ;
+    mvPosition.z += sin(time * 2.) * (5.5 * dist.z) * normal.z ;
 
     // mvPosition.y += dist * (sin(time * 5. * normal.y) ) ;
 

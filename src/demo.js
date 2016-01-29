@@ -4,6 +4,7 @@ import Stats from 'stats-js' ;
 
 // const OrbitControls = require('three-orbit-controls')(THREE);
 const glslify = require('glslify');
+require('./post-processing/EffectComposer')(THREE);
 
 class Demo {
   constructor(args) 
@@ -28,6 +29,7 @@ class Demo {
 
     this.createRender();
     this.createScene();
+    this.addComposer();
     this.addObjects();
     this.onResize();
     this.update();
@@ -46,11 +48,50 @@ class Demo {
   createRender()
   {
     this.renderer = new THREE.WebGLRenderer( {
-        antialias : true,
-        clearColor: 0
+        antialias : false,
+        depth     : true,
     } );
-    // this.renderer.autoClear=false;
+
+    this.renderer.setClearColor( 0x000000 );
+    this.renderer.setClearAlpha( 0 );
+    // this.renderer.setPixelRatio( window.devicePixelRatio || 1 )
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.gammaInput = true;
+    this.renderer.gammaOuput = true;
+    this.renderer.autoClear = false;
+
     document.querySelector('.canvas-container').appendChild(this.renderer.domElement)
+  }
+
+  addComposer()
+  {
+    this.composer = new THREE.EffectComposer(this.renderer);
+
+    let scenePass = new THREE.RenderPass( this.scene, this.camera, false, 0x000000, 0 );
+
+    this.gamma = {
+      uniforms: {
+        tDiffuse   : {type: "t", value: null },
+        time       : {type: "f", value: 0 },
+        resolution : {type: 'v2', value: new THREE.Vector2(
+          window.innerWidth * (window.devicePixelRatio || 1),
+          window.innerHeight * (window.devicePixelRatio || 1)
+          )},
+      },
+      vertexShader   : glslify('./post-processing/glsl/screen_vert.glsl'),
+      fragmentShader : glslify('./post-processing/glsl/gamma.glsl'),
+    }
+
+    /*
+    passes
+    */
+
+    this.composer.addPass(scenePass);
+
+    this.gammaShader = new THREE.ShaderPass(this.gamma);
+    this.gammaShader.renderToScreen = true;
+    this.composer.addPass(this.gammaShader);
+
   }
 
   createScene()
@@ -117,18 +158,26 @@ class Demo {
   {
     this.stats.begin();
 
+    let el = this.clock.getElapsedTime() * .05;
+    let d = this.clock.getDelta();
+
+    this.renderer.clear();
+
+    // this.renderer.render(this.scene, this.camera);
+
     this.mesh.rotation.y += .00045;
-    this.mesh.rotation.x += .000045;
-    this.mesh.rotation.z += .000145;
-    this.mapTexture.offset.x += .0005;
-    this.mapTexture.offset.y += .0005;
+    this.mesh.rotation.x += .00045;
+    this.mesh.rotation.z += .00045;
+    this.mapTexture.offset.x += .0015;
+    this.mapTexture.offset.y += .0015;
     this.mapTexture.needsUpdate = true;
 
-    let time = this.clock.getElapsedTime();
-    this.material.uniforms.time.value = time;
+    this.material.uniforms.time.value = el;
+    this.gammaShader.uniforms.time.value = el;
 
     // this.renderer.render(this.scene, this.camera, this.composer.renderTargets[0], false);
-    this.renderer.render(this.scene, this.camera);
+    // this.renderer.render(this.scene, this.camera);
+    this.composer.render(d);
     // this.composer.render();
 
     this.stats.end()
