@@ -330,6 +330,11 @@ hr
         width: 39vw;
     }
 
+    .project-item > video
+    {
+        display: none;
+    }
+
     .container-project > .text
     {
         width: 38.5vw;
@@ -383,6 +388,11 @@ hr
     {
         height: 21vw;
         width: 21vw;
+    }
+
+    .project-item > video
+    {
+        display: none;
     }
 
     .container-project > .text

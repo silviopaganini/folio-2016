@@ -1,16 +1,19 @@
-import THREE from 'three.js'; 
-import dat   from 'dat-gui' ;
-import Stats from 'stats-js' ;
+import THREE   from 'three.js'; 
+import dat     from 'dat-gui' ;
+import Stats   from 'stats-js' ;
+// import MobileDetect from 'mobile-detect';
 
 // const OrbitControls = require('three-orbit-controls')(THREE);
 const glslify = require('glslify');
-require('./post-processing/EffectComposer')(THREE);
+// require('./post-processing/EffectComposer')(THREE);
 
 class Demo {
   constructor(args) 
   {
     this.startStats();
     // this.startGUI();
+
+    // this.md = new MobileDetect(window.navigator.userAgent);
 
     this.renderer = null;
     this.camera   = null;
@@ -29,7 +32,9 @@ class Demo {
 
     this.createRender();
     this.createScene();
-    this.addComposer();
+
+    // if(!this.md.mobile()) this.addComposer();
+    
     this.addObjects();
     this.onResize();
     this.update();
@@ -48,7 +53,7 @@ class Demo {
   createRender()
   {
     this.renderer = new THREE.WebGLRenderer( {
-        antialias : false,
+        antialias : true,
         depth     : true,
     } );
 
@@ -63,36 +68,36 @@ class Demo {
     document.querySelector('.canvas-container').appendChild(this.renderer.domElement)
   }
 
-  addComposer()
-  {
-    this.composer = new THREE.EffectComposer(this.renderer);
+  // addComposer()
+  // {
+  //   this.composer = new THREE.EffectComposer(this.renderer);
 
-    let scenePass = new THREE.RenderPass( this.scene, this.camera, false, 0x000000, 0 );
+  //   let scenePass = new THREE.RenderPass( this.scene, this.camera, false, 0x000000, 0 );
 
-    this.gamma = {
-      uniforms: {
-        tDiffuse   : {type: "t", value: null },
-        time       : {type: "f", value: 0 },
-        resolution : {type: 'v2', value: new THREE.Vector2(
-          window.innerWidth * (window.devicePixelRatio || 1),
-          window.innerHeight * (window.devicePixelRatio || 1)
-          )},
-      },
-      vertexShader   : glslify('./post-processing/glsl/screen_vert.glsl'),
-      fragmentShader : glslify('./post-processing/glsl/gamma.glsl'),
-    }
+  //   this.gamma = {
+  //     uniforms: {
+  //       tDiffuse   : {type: "t", value: null },
+  //       time       : {type: "f", value: 0 },
+  //       resolution : {type: 'v2', value: new THREE.Vector2(
+  //         window.innerWidth * (window.devicePixelRatio || 1),
+  //         window.innerHeight * (window.devicePixelRatio || 1)
+  //         )},
+  //     },
+  //     vertexShader   : glslify('./post-processing/glsl/screen_vert.glsl'),
+  //     fragmentShader : glslify('./post-processing/glsl/gamma.glsl'),
+  //   }
 
-    /*
-    passes
-    */
+  //   /*
+  //   passes
+  //   */
 
-    this.composer.addPass(scenePass);
+  //   this.composer.addPass(scenePass);
 
-    this.gammaShader = new THREE.ShaderPass(this.gamma);
-    this.gammaShader.renderToScreen = true;
-    this.composer.addPass(this.gammaShader);
+  //   this.gammaShader = new THREE.ShaderPass(this.gamma);
+  //   this.gammaShader.renderToScreen = true;
+  //   this.composer.addPass(this.gammaShader);
 
-  }
+  // }
 
   createScene()
   {
@@ -127,7 +132,7 @@ class Demo {
         vertexShader   : glslify('./glsl/material-vert.glsl'),
         fragmentShader : glslify('./glsl/material-frag.glsl'),
         shading        : THREE.FlatShading,
-        // side           : THREE.DoubleSide,
+        side           : THREE.DoubleSide,
         wireframe      : true,
     })
 
@@ -169,16 +174,23 @@ class Demo {
     this.mesh.rotation.y += .00045;
     this.mesh.rotation.x += .00045;
     this.mesh.rotation.z += .00045;
-    this.mapTexture.offset.x += .0015;
-    this.mapTexture.offset.y += .0015;
+    // this.mapTexture.offset.x += 10.0115;
+    // this.mapTexture.offset.y += 10.0115;
     this.mapTexture.needsUpdate = true;
 
     this.material.uniforms.time.value = el;
-    this.gammaShader.uniforms.time.value = el;
+
+    // if(!this.md.mobile())
+    // {
+    //     // this.gammaShader.uniforms.time.value = el;
+    //     // this.composer.render(d);
+    // } else {
+    // }
+
+    this.renderer.render(this.scene, this.camera);
 
     // this.renderer.render(this.scene, this.camera, this.composer.renderTargets[0], false);
-    // this.renderer.render(this.scene, this.camera);
-    this.composer.render(d);
+    
     // this.composer.render();
 
     this.stats.end()
