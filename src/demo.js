@@ -138,7 +138,8 @@ class Demo {
     // });
 
     // this.form = new THREE.BufferGeometry().fromGeometry(new THREE.IcosahedronGeometry(60, 4));
-    this.form = new THREE.BufferGeometry().fromGeometry(new THREE.SphereGeometry(120, 64, 32));
+    // this.form = new THREE.BufferGeometry().fromGeometry(new THREE.SphereGeometry(120, 64, 32));
+    this.form = new THREE.BufferGeometry().fromGeometry(new THREE.IcosahedronGeometry(120, 4));
     this.mesh = new THREE.Mesh(this.form, this.material);
     // this.mesh.position.x = 200;
     this.scene.add(this.mesh);
