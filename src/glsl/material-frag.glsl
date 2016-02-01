@@ -40,9 +40,9 @@ void main()
     normal = faceNormals(vPosition);
 
     vec2 uv = vUv;
-    uv.x += time * 1.15;
+    uv.x += time * 2.15;
 
-    vec3 diffuse = color;
+    vec3 diffuse = color ;
     // diffuse = color;
 
     // vec3 eyeDirection = normalize(vPosition);

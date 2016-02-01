@@ -19,11 +19,16 @@ void main() {
 
     float power = 7.5;
     vec3 nTime = normalize(vec3(time)) * 5.5;
-    vec3 dist = vec3(snoise3(normal)) * (normal * power) * nTime;
+    vec3 noise = vec3(snoise3(normal)); 
+    vec3 dist = noise * (normal * power) * nTime;
 
-    mvPosition.x += cos(time * 2.) * (5.5 * dist.x) * normal.x ;
-    mvPosition.y += sin(time * 2.) * (5.5 * dist.y) * normal.y ;
-    mvPosition.z += sin(time * 2.) * (5.5 * dist.z) * normal.z ;
+    // mvPosition.x += cos(time * 2.) * (5.5 * dist.x) * normal.x ;
+    // mvPosition.y += sin(time * 2.) * (5.5 * dist.y) * normal.y ;
+    // mvPosition.z += sin(time * 2.) * (5.5 * dist.z) * normal.z ;
+
+    mvPosition.x += (cos(time) * (dist.x) );
+    mvPosition.y += (sin(time) * (dist.y) );
+    mvPosition.z += (cos(time * 10.) * dist.z * 2.);
 
     // mvPosition.y += dist * (sin(time * 5. * normal.y) ) ;
 
