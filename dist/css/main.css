@@ -40,6 +40,19 @@ section
     color: #888;
     list-style: none;
     font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.awards-list > li > ul
+{
+    margin-bottom: 5px;
+    padding-left: 15px;
+}
+
+.awards-list > li > ul > li
+{
+  list-style: none;
+  color: #666;
 }
 
 .awards-container
