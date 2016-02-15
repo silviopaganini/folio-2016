@@ -427,3 +427,22 @@ hr
         transform: scaleY(1);
     }
 }
+
+.tech-stack-list
+{
+  /*border: 1px solid red;*/
+  display: flex;
+  /*width: 80vw;*/
+  flex-wrap: wrap;
+  justify-content: flex-start;;
+}
+
+.tech-stack-list > div
+{
+  /*border : 1px solid yellow;*/
+  flex-basis: 320px;
+  /*align-self: flex-start;*/
+  /*flex: flex-basis;*/
+  min-width: 320px;
+  /*width: 22vw;*/
+}
