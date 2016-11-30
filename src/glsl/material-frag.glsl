@@ -23,7 +23,7 @@ float phong(vec3 light, vec3 normal, vec3 eyeDirection, float shininess)
     // light        : normalized light direction
     // normal       : surface view normal
     // eyeDirection : normalized vPosition
-    // shininess    : self explanatory =) 
+    // shininess    : self explanatory =)
 
     return pow(max(dot(reflect(light, normal), eyeDirection), 0.0), shininess);
 }
@@ -46,23 +46,24 @@ void main()
     // diffuse = color;
 
     // vec3 eyeDirection = normalize(vPosition);
-    // vec3 light = ambient + 
-    //         diffuse * lambert(normal, vLight) + 
-    //         specular * phong( 
-    //             vLight, 
-    //             normal, 
-    //             eyeDirection, 
-    //             shininess 
+    // vec3 light = ambient +
+    //         diffuse * lambert(normal, vLight) +
+    //         specular * phong(
+    //             vLight,
+    //             normal,
+    //             eyeDirection,
+    //             shininess
     //         );
 
     vec3 light = diffuse;
 
-    
+
     // vec3 envMap = getEnvMap(vPosition, normal, tDiffuse);
 
     // light = light * faceNormals(light);
 
-    gl_FragColor = texture2D(tDiffuse, (uv * .5)) * vec4(light, 1.0) ;
+    // gl_FragColor = texture2D(tDiffuse, (uv * .5)) * vec4(light, 1.0) ;
+    gl_FragColor = vec4(light, 1.0);
     // gl_FragColor = vec4(light, 1.0);
     // gl_FragColor = vec4(normalize(vNormal), 1.);
 }
