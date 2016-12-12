@@ -1,3 +1,5 @@
+const glslify = require('glslify')
+
 import {
   WebGLRenderer,
   Clock,
@@ -7,10 +9,8 @@ import {
   ShaderMaterial,
   Color,
   Vector3,
-  DoubleSide,
   FlatShading,
   IcosahedronBufferGeometry,
-  AmbientLight,
   Mesh
 } from 'three'
 // import dat from 'dat-gui'
@@ -21,11 +21,11 @@ import RenderPass from './post-processing/RenderPass'
 //
 
 // const OrbitControls = require('three-orbit-controls')(THREE);
-const glslify = require('glslify')
 
 class Demo {
   constructor (args) {
     this.startStats()
+    this.updateBinded = this.update.bind(this)
     // this.startGUI();
 
     // this.md = new MobileDetect(window.navigator.userAgent);
@@ -116,44 +116,25 @@ class Demo {
   }
 
   addObjects () {
-    // var gridHelper = new THREE.GridHelper( 20, 10 );
-    // this.scene.add( gridHelper );
-
-    // this.mapTexture = this.tex;
-    // this.mapTexture.wrapS = this.mapTexture.wrapT = THREE.MirroredRepeatWrapping;
-    // this.mapTexture.repeat.set(.5, .5);
-
     this.material = new ShaderMaterial({
       uniforms: {
         time: {type: 'f', value: 0},
-        ambient: {type: 'c', value: new Color(0x333333)},
-        tDiffuse: {type: 't', value: this.mapTexture},
-        specular: {type: 'f', value: 1},
-        color: {type: 'c', value: new Color(0x333333)},
-        shininess: {type: 'f', value: 1},
+        ambient: {type: 'c', value: new Color(0x171717)},
+        specular: {type: 'c', value: new Color(0x030303)},
+        color: {type: 'c', value: new Color(0x000000)},
+        shininess: {type: 'f', value: 2},
         lightDirection: {type: 'v3', value: new Vector3(0, 0, 0)}
       },
       vertexShader: glslify('./glsl/material-vert.glsl'),
       fragmentShader: glslify('./glsl/material-frag.glsl'),
       shading: FlatShading,
-      side: DoubleSide,
+      side: 1,
       wireframe: true
     })
 
-    // this.material = new THREE.MeshPhongMaterial({
-    //   map: this.mapTexture,
-    //   wireframe: true,
-    //   // blending: THREE.AdditiveBlending,
-    // });
-
-    // this.form = new THREE.BufferGeometry().fromGeometry(new THREE.IcosahedronGeometry(60, 4));
-    // this.form = new THREE.BufferGeometry().fromGeometry(new THREE.SphereGeometry(120, 64, 32));
     this.form = new IcosahedronBufferGeometry(120, 4)
     this.mesh = new Mesh(this.form, this.material)
-    // this.mesh.position.x = 200;
     this.scene.add(this.mesh)
-
-    this.scene.add(new AmbientLight(0x333333))
   }
 
   startGUI () {
@@ -166,21 +147,22 @@ class Demo {
   update () {
     this.stats.begin()
 
-    // let el = this.clock.getElapsedTime() * 0.05
+    let el = this.clock.getElapsedTime()
     // let d = this.clock.getDelta()
 
     this.renderer.clear()
 
     // this.renderer.render(this.scene, this.camera);
 
-    this.mesh.rotation.y += 0.00045
-    this.mesh.rotation.x += 0.00045
-    this.mesh.rotation.z += 0.00045
+    this.mesh.rotation.y += 0.0007
+    this.mesh.rotation.x += 0.0007
+    this.mesh.rotation.z += 0.0007
     // this.mapTexture.offset.x += 10.0115;
     // this.mapTexture.offset.y += 10.0115;
     // this.mapTexture.needsUpdate = true;
 
-    // this.material.uniforms.time.value = el;
+    this.material.uniforms.time.value = el
+    // this.gammaShader.uniforms.time.value = el
 
     // if(!this.md.mobile())
     // {
@@ -191,17 +173,16 @@ class Demo {
 
     this.renderer.render(this.scene, this.camera)
 
-    // this.renderer.render(this.scene, this.camera, this.composer.renderTargets[0], false);
-
-    // this.composer.render();
+    // this.renderer.render(this.scene, this.camera, this.composer.renderTargets[0], false)
+    // this.composer.render()
 
     this.stats.end()
-    window.requestAnimationFrame(this.update.bind(this))
+    window.requestAnimationFrame(this.updateBinded)
   }
 
   onResize () {
     this.renderer.setSize(window.innerWidth, window.innerHeight)
-    // this.composer.setSize(window.innerWidth, window.innerHeight);
+    this.composer.setSize(window.innerWidth, window.innerHeight)
     this.camera.aspect = window.innerWidth / window.innerHeight
     this.camera.updateProjectionMatrix()
   }

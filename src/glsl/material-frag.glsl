@@ -3,11 +3,10 @@ varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec3 vLight;
 
-uniform sampler2D tDiffuse;
 uniform vec3 color;
 uniform vec3 ambient;
 uniform vec3 lightDirection;
-uniform float specular;
+uniform vec3 specular;
 uniform float shininess;
 uniform float time;
 
@@ -39,30 +38,19 @@ void main()
     vec3 normal = vNormal;
     normal = faceNormals(vPosition);
 
-    vec2 uv = vUv;
-    uv.x += time * 2.15;
-
     vec3 diffuse = color ;
     // diffuse = color;
 
-    // vec3 eyeDirection = normalize(vPosition);
-    // vec3 light = ambient +
-    //         diffuse * lambert(normal, vLight) +
-    //         specular * phong(
-    //             vLight,
-    //             normal,
-    //             eyeDirection,
-    //             shininess
-    //         );
+    vec3 eyeDirection = normalize(vPosition);
+    vec3 light = ambient +
+      diffuse * lambert(normal, vLight) +
+      specular * phong(
+        vLight,
+        normal,
+        eyeDirection,
+        shininess
+      );
 
-    vec3 light = diffuse;
-
-
-    // vec3 envMap = getEnvMap(vPosition, normal, tDiffuse);
-
-    // light = light * faceNormals(light);
-
-    // gl_FragColor = texture2D(tDiffuse, (uv * .5)) * vec4(light, 1.0) ;
     gl_FragColor = vec4(light, 1.0);
     // gl_FragColor = vec4(light, 1.0);
     // gl_FragColor = vec4(normalize(vNormal), 1.);

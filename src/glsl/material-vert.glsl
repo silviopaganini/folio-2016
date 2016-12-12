@@ -1,40 +1,37 @@
-#pragma glslify: snoise3 = require(glsl-noise/simplex/3d) 
-#pragma glslify: snoise3 = require(glsl-noise/simplex/2d) 
+#pragma glslify: curlNoise = require(glsl-curl-noise)
 
+#define PI 3.14159265359
 varying vec2 vUv;
 varying vec3 vPosition;
 varying vec3 vNormal;
-// varying vec3 vLight;
+varying vec3 vLight;
 
 uniform vec3 lightDirection;
 uniform float time;
-
-float rand(vec2 co){
-    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-}
 
 void main() {
     vUv = uv;
     vec4 mvPosition = modelViewMatrix * vec4(position , 1.0 );
 
-    float power = 7.5;
-    vec3 nTime = normalize(vec3(time)) * 5.5;
-    vec3 noise = vec3(snoise3(normal)); 
-    vec3 dist = noise * (normal * power) * nTime;
+    float aaTime = time * 1.95;
+    aaTime = 0.5 + 0.5 * ((2.0 * PI) * time);
+    aaTime *= 0.25;
 
-    // mvPosition.x += cos(time * 2.) * (5.5 * dist.x) * normal.x ;
-    // mvPosition.y += sin(time * 2.) * (5.5 * dist.y) * normal.y ;
-    // mvPosition.z += sin(time * 2.) * (5.5 * dist.z) * normal.z ;
+    float power = 15.5;
+    vec3 noise = curlNoise(normal);
+    vec3 dist = noise * normal * power;
 
-    mvPosition.x += (cos(time) * (dist.x) );
-    mvPosition.y += (sin(time) * (dist.y) );
-    mvPosition.z += (cos(time * 10.) * dist.z * 2.);
+    // mvPosition.x += cos(aaTime * 2.) * (5.5 * dist.x) * normal.z ;
+    // mvPosition.y += sin(aaTime * 2.) * (5.5 * dist.y) * normal.x ;
+    // mvPosition.z += sin(aaTime * 2.) * (5.5 * dist.z) * normal.z ;
 
-    // mvPosition.y += dist * (sin(time * 5. * normal.y) ) ;
+    mvPosition.x += (cos(aaTime) * (dist.x) );
+    mvPosition.y += (sin(aaTime) * (dist.y) );
+    mvPosition.z += (sin(aaTime) * (dist.z) );
 
     vNormal = normal * normalMatrix;
     vPosition = mvPosition.xyz;
-    // vLight = normalize(lightDirection - vPosition);
+    vLight = normalize(lightDirection - vPosition);
 
-    gl_Position =  projectionMatrix * mvPosition;
+    gl_Position = projectionMatrix * mvPosition;
 }
