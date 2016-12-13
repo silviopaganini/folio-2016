@@ -39,7 +39,6 @@ void main()
     normal = faceNormals(vPosition);
 
     vec3 diffuse = color ;
-    // diffuse = color;
 
     vec3 eyeDirection = normalize(vPosition);
     vec3 light = ambient +
@@ -51,7 +50,7 @@ void main()
         shininess
       );
 
-    gl_FragColor = vec4(light, 1.0);
     // gl_FragColor = vec4(light, 1.0);
+    gl_FragColor = vec4(light, 1.0);
     // gl_FragColor = vec4(normalize(vNormal), 1.);
 }

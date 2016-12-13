@@ -29,14 +29,14 @@ float pattern() {
 void main() {
 
     vec2 fragCoord = vUv * resolution;
-    vec4 texel = fxaa(tDiffuse, fragCoord, resolution);
+    // vec4 texel = fxaa(tDiffuse, fragCoord, resolution);
 
     // float amount = 20.;
     // float speed = 1.5;
     //
-    // // vec4 noise = vec4( vec3( amount * random( vUv, .005 * speed * time ) ), 1. );
+    // vec4 noise = vec4( vec3( amount * random( vUv, .005 * speed * time ) ), 1. );
     //
-    // // texel = mix(texel, noise, .0125);
+    // texel = mix(texel, noise, .0125);
     //
     // vec2 res = (gl_FragCoord.xy / resolution.xy) - vec2(0.2);
     // res.x *= resolution.x / resolution.y;
@@ -48,23 +48,23 @@ void main() {
     // float vignette = smoothstep(.85, .5, len);
     // texel = pow(texel, vec4(3.)) * vignette;
     // //
-    // float angle = 0.;
-    // float amount = 0.005;
+    float angle = 0.;
+    float amount = 0.005;
     //
-    // vec2 offset = amount * vec2( cos(angle), sin(angle));
-		// vec4 cr = texture2D(tDiffuse, vUv + offset);
-		// vec4 cga = texture2D(tDiffuse, vUv);
-		// vec4 cb = texture2D(tDiffuse, vUv - offset);
+    vec2 offset = amount * vec2( cos(angle), sin(angle));
+		vec4 cr = texture2D(tDiffuse, vUv + offset);
+		vec4 cga = texture2D(tDiffuse, vUv);
+		vec4 cb = texture2D(tDiffuse, vUv - offset);
     //
-    // vec3 texel = vec3(cr.r, cga.g, cb.b);
+    vec3 texel = vec3(cr.r, cga.g, cb.b);
     //
-    // float average = ( texel.r + texel.g + texel.b ) / 3.0;
+    float average = ( texel.r + texel.g + texel.b ) / 3.0;
     //
-    // vec3 colorFinal = texel * pattern();
+    vec3 colorFinal = texel + (average* pattern());
 
-		// gl_FragColor = vec4(colorFinal, 1.0);
+		gl_FragColor = vec4(colorFinal, 1.0);
 
     // gl_FragColor = texture2D(tDiffuse, vUv);
-    gl_FragColor = texel;
+    // gl_FragColor = texel;
 
 }

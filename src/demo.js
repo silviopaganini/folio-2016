@@ -121,7 +121,7 @@ class Demo {
         time: {type: 'f', value: 0},
         ambient: {type: 'c', value: new Color(0x171717)},
         specular: {type: 'c', value: new Color(0x030303)},
-        color: {type: 'c', value: new Color(0x000000)},
+        color: {type: 'c', value: new Color(0xFFFFFF)},
         shininess: {type: 'f', value: 2},
         lightDirection: {type: 'v3', value: new Vector3(0, 0, 0)}
       },
@@ -171,10 +171,9 @@ class Demo {
     // } else {
     // }
 
-    this.renderer.render(this.scene, this.camera)
+    // this.renderer.render(this.scene, this.camera)
 
-    // this.renderer.render(this.scene, this.camera, this.composer.renderTargets[0], false)
-    // this.composer.render()
+    this.composer.render()
 
     this.stats.end()
     window.requestAnimationFrame(this.updateBinded)
