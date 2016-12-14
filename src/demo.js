@@ -28,7 +28,7 @@ class Demo {
     this.updateBinded = this.update.bind(this)
     // this.startGUI();
 
-    // this.md = new MobileDetect(window.navigator.userAgent);
+    // this.md = new MobileDetect(window.navigator.userAgent)
 
     this.renderer = null
     this.camera = null
@@ -42,7 +42,7 @@ class Demo {
   start () {
     this.createRender()
     this.createScene()
-    this.addComposer()
+    // this.addComposer()
     this.addObjects()
     this.onResize()
     this.update()
@@ -116,13 +116,16 @@ class Demo {
   }
 
   addObjects () {
+    // ref for next update
+    // http://www.shutterstock.com/video/clip-21724933-stock-footage-abstract-d-rendering-of-kinked-and-bended-lines-camera-moving-through-the-massive-of-thin-lines.html?src=rel/5868443:7/3p
+
     this.material = new ShaderMaterial({
       uniforms: {
         time: {type: 'f', value: 0},
         ambient: {type: 'c', value: new Color(0x171717)},
         specular: {type: 'c', value: new Color(0x030303)},
-        color: {type: 'c', value: new Color(0xFFFFFF)},
-        shininess: {type: 'f', value: 2},
+        color: {type: 'c', value: new Color(0xCCCCCC)},
+        shininess: {type: 'f', value: 0.2},
         lightDirection: {type: 'v3', value: new Vector3(0, 0, 0)}
       },
       vertexShader: glslify('./glsl/material-vert.glsl'),
@@ -134,6 +137,7 @@ class Demo {
 
     this.form = new IcosahedronBufferGeometry(120, 4)
     this.mesh = new Mesh(this.form, this.material)
+
     this.scene.add(this.mesh)
   }
 
@@ -147,7 +151,7 @@ class Demo {
   update () {
     this.stats.begin()
 
-    let el = this.clock.getElapsedTime()
+    let el = this.clock.getElapsedTime() * 0.5
     // let d = this.clock.getDelta()
 
     this.renderer.clear()
@@ -171,9 +175,9 @@ class Demo {
     // } else {
     // }
 
-    // this.renderer.render(this.scene, this.camera)
+    this.renderer.render(this.scene, this.camera)
 
-    this.composer.render()
+    // this.composer.render()
 
     this.stats.end()
     window.requestAnimationFrame(this.updateBinded)
@@ -181,7 +185,7 @@ class Demo {
 
   onResize () {
     this.renderer.setSize(window.innerWidth, window.innerHeight)
-    this.composer.setSize(window.innerWidth, window.innerHeight)
+    // this.composer.setSize(window.innerWidth, window.innerHeight)
     this.camera.aspect = window.innerWidth / window.innerHeight
     this.camera.updateProjectionMatrix()
   }
