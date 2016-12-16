@@ -16,7 +16,7 @@ void main() {
 
     float aaTime = time * 1.95;
     aaTime = 0.5 + 0.5 * ((2.0 * PI) * time);
-    aaTime *= 0.25;
+    aaTime *= 0.18;
 
     float power = 15.5;
     vec3 noise = curlNoise(normal + (sin(time * .25)));
