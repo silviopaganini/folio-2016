@@ -14,7 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "budo --dir dist/ src/index.js:js/bundle.js -v --live -- -t [ babelify --presets [ es2015 ] ] -t glslify | garnish",
     "build": "browserify -t [ babelify --presets [ es2015 ] ] -t glslify src/index.js | uglifyjs --screw-ie8 -cm > dist/js/bundle.js",
-    "deploy": "aws s3 sync dist s3://fluuu.id/s2paganini --exclude \"*.git/*\" --exclude \"*/node_modules/*\" --exclude \"npm-debug.log\" --exclude \"*/jspm_packages/*\" --delete"
+    "deploy": "aws s3 sync --profile fluuuid dist s3://fluuu.id/s2paganini --exclude \"*.git/*\" --exclude \"*/node_modules/*\" --exclude \"npm-debug.log\" --exclude \"*/jspm_packages/*\" --delete"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.18.0",
